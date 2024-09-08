@@ -1,0 +1,21 @@
+pia_show_1.blade.php
+<!--
+    <a>
+        検索条件　　
+        @if($temp->day_from == '0000-01-01' && $temp->day_to == '9999-12-31')
+            <a>期間：全期間</a>
+        @elseif($temp->day_to == '9999-12-31')
+            <a>期間：{{ date($temp->day_from) }} から</a>
+        @elseif($temp->day_from == '0000-01-01')
+            <a>期間：{{ date($temp->day_to) }} まで</a>
+        @else
+            <a>期間：{{ date($temp->day_from) }} から {{ date($temp->day_to) }} まで</a>
+        @endif
+        <a>|</a>
+        @if(isset($temp->accnt_class))
+            <a>科目：{{ $temp->accnt_class }}</a>
+        @else
+            <a>科目：全科目</a>
+        @endif
+    </a>
+-->
