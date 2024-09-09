@@ -16,7 +16,7 @@
     <h2>明細照会</h2>
     <p>照会したい期間および勘定科目を指定してください。</p>
     
-    <form action={{ route('pia.show_1') }} method="get">
+    <form action={{ route('piainquiry.confirm') }} method="get">
             <div style="border-width:thin; border-style:dashed;padding:0px 20px 20px;border-color:#777777;">
                 <table>
                     <p>

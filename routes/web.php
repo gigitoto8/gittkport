@@ -15,27 +15,28 @@ use App\Http\Controllers\VaridatorController;
 |
 */
 
+//インデックス画面に移行
 Route::get('/pia_index', 'PayInfoController@index')->name('pia_index.list');
 
-//明細入力画面へ
-Route::get('/pianew_input', 'PayInfoController@input')->name('pianew.input');
-//セッションに入力値を送信
-Route::post('/pianew_input', "PayInfoController@send")->name("pianew.send");
-//入力内容確認画面へ
-Route::get('/pianew_confirm', "PayInfoController@confirm")->name("pianew.confirm");
-//入力内容をデータベースに登録
-Route::post('/pianew_confirm','PayInfoController@store')->name('pianew.store');
-//登録完了画面へ
-Route::get('/pianew_complete', "PayInfoController@complete")->name("pianew.complete");    
+//支払情報入力
+Route::get('/pianew_input', 'PayInfoController@newInput')->name('pianew.input');
+//バリデーション実行し、セッションに入力値を送信
+Route::post('/pianew_input', "PayInfoController@newSend")->name("pianew.send");
+//入力内容確認
+Route::get('/pianew_confirm', "PayInfoController@newConfirm")->name("pianew.confirm");
+//入力内容をテーブルに登録
+Route::post('/pianew_confirm','PayInfoController@newStore')->name('pianew.store');
+//入力完了の表示
+Route::get('/pianew_complete', "PayInfoController@newComplete")->name("pianew.complete");    
 
-//明細照会画面（条件入力）へ
-Route::get('/pia_show', 'PayInfoController@show')->name('pia.show');
-//明細照会画面（結果表示）へ
-Route::get('/pia_show_1', 'PayInfoController@show_1')->name('pia.show_1');
-//CSVデータ生成、ダウンロード
-Route::post('/pia_show_1', 'PayInfoController@createCSV')->name('pia.crecsv');
-/*ZIPデータ生成、ダウンロード（）
-Route::post('/pia_show_1', 'PayInfoController@createZIP')->name('pia.crezip');
+//明細照会条件入力
+Route::get('/piainquiry_input', 'PayInfoController@inquiryInput')->name('piainquiry.input');
+//明細照会確認へ
+Route::get('/piainquiry_confirm', 'PayInfoController@inquiryConfirm')->name('piainquiry.confirm');
+//照会CSVデータ生成、ダウンロード
+Route::post('/piainquiry_confirm', 'PayInfoController@inquiryCsv')->name('piainquiry.csv');
+/*照会ZIPデータ生成、ダウンロード（）
+Route::post('/piainquiry_confirm', 'PayInfoController@inquiryZIP')->name('piainquiry.zip');
 */
 
 Route::get('/', function () {

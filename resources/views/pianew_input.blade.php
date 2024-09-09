@@ -26,7 +26,7 @@
             {{ Form::text('payee',null) }}
         </div>
         <div class='form-group'>
-            {{ Form::label('accnt_class','勘定科目：') }}
+            {{ Form::label('accnt_class','科目：') }}
             {{ Form::select('accnt_class',$account_items) }}
         </div>
         <div class='form-group'>
