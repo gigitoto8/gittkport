@@ -58,17 +58,18 @@
     {{ $pay_infos10->appends(request()->input() )->links() }}
     
 
-    <form action={{ route('pia.crezip') }} method="post">
+    <form action={{ route('pia.crecsv') }} method="post">
     @csrf                  
         <div style="border-width:thin; border-style:dashed;padding:20px 20px 20px;border-color:#777777;">
-            <a>照会結果のCSVをダウンロードしますか？</a>
-            <input type="button" value="CSVデータ出力" onClick="submit();">
+            <a>照会結果のCSVデータをダウンロードする場合、"CSVダウンロード"ボタンをクリックしてください。</a>
+            <br>
+            <a>※データ名を指定する場合、テキストボックスに入力してください。</a>
+            <br>
+            {{ Form::text('filename',null) }}
+            <input type="button" value="CSVダウンロード" onClick="submit();">
         </div>
         <br>
     </form>
-
-
-
 
     <div>
         <a href={{ route('pia.show') }}>戻る</a>

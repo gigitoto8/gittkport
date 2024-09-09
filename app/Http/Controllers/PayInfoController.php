@@ -228,6 +228,7 @@ class PayInfoController extends Controller
         //
     }
 
+    /*
     public function createZIP(){
         $pay_infos = session()->get('pay_infos');
         $head = ['明細管理番号','支払日','支払先','勘定科目','支払内容','金額（税込）'
@@ -248,7 +249,7 @@ class PayInfoController extends Controller
         
         // CSVデータを一時ファイルに保存してZIP化
         $zip = new \ZipArchive();
-        $zipFileName = 'data.zip';
+        $zipFileName = 'test.zip';
         $zip->open($zipFileName,\ZipArchive::CREATE);    //同値演算子　値だけでなく、型も同じ場合にtrueを返
         $file_info = pathinfo('test.csv');
         $zip->addFile('test.csv');
@@ -256,58 +257,42 @@ class PayInfoController extends Controller
 
         // ZIPファイルをダウンロードさせる
         return response()->download($zipFileName);
-        
-        //CSVでダウンロードする場合
-        // ダウンロード用のレスポンスを返す
-        //return response()->streamDownload($callback, 'test.csv', [
-        //    'Content-Type' => 'text/csv',
-        //    'Content-Disposition' => 'attachment; filename="test.csv"',
-        //]);
-        
-    }
-
-
-    /*
-    public function createCSV(){
-        $usersFromSession = session('pay_infos');
-                $request->session()->forget('pay_infos');
-        $head = ['明細管理番号','支払日','支払先','勘定科目','支払内容','金額（税込）'
-                ,'備考','ユーザーID','登録日','更新日'];
-    
-        // CSVデータを出力するためのストリームを生成
-        $payinfosCSV = function() use ($usersFromSession, $head) {
-            $f = fopen('php://output', 'w');
-            // ヘッダーの文字エンコーディングを変換し、書き込み
-            mb_convert_variables('SJIS', 'UTF-8', $head);
-            fputcsv($f, $head);
-            // データのエンコーディングを変換し、各行を書き込み
-            foreach ($usersFromSession as $pay_info) {
-                mb_convert_variables('SJIS', 'UTF-8', $pay_info);
-                fputcsv($f, $pay_info);
-            }
-            // ファイルを閉じる
-            fclose($f);
-        };
-        
-        // CSVデータを一時ファイルに保存してZIP化
-        $zip = new \ZipArchive;
-        $zipFileName = 'data.zip';
-        if ($zip->open($zipFileName, \ZipArchive::CREATE) === TRUE) {    //同値演算子　値だけでなく、型も同じ場合にtrueを返
-            $zip->addFromString('data.csv',$payinfosCSV);
-            $zip->close();
-        }
-        // ZIPファイルをダウンロードさせる
-        return response()->download($zipFileName);
-        
-        //CSVでダウンロードする場合
-        // ダウンロード用のレスポンスを返す
-        //return response()->streamDownload($callback, 'test.csv', [
-        //    'Content-Type' => 'text/csv',
-        //    'Content-Disposition' => 'attachment; filename="test.csv"',
-        //]);
-        
     }
     */
+
+    public function createCSV(Request $request){
+        $usersFromSession = session('pay_infos');
+    
+        // CSVデータを生成
+        $head = ['明細管理番号','支払日','支払先','勘定科目','支払内容','金額（税込）'
+                ,'備考','ユーザーID','登録日','更新日'];
+        $f = fopen('php://output', 'w');
+        ob_start();
+        // ヘッダーの文字エンコーディングを変換し、書き込み
+        mb_convert_variables('SJIS', 'UTF-8', $head);
+        fputcsv($f, $head);
+        // データのエンコーディングを変換し、各行を書き込み
+        foreach ($usersFromSession as $pay_info) {
+            mb_convert_variables('SJIS', 'UTF-8', $pay_info);
+            fputcsv($f, $pay_info);
+        }
+        // ファイルを閉じる
+        fclose($f);
+        $csvContent = ob_get_clean();
+        
+        //ファイル名
+        if(isset($request->filename)){
+            $filename = $request->filename.'.csv';
+        }else{
+            $filename = 'test' . date('Y-m-d H:i:s') . '.csv';
+        }
+        
+        // ZIPファイルをダウンロードさせる
+        return response($csvContent)
+            ->header('Content-Type','text/csv')
+            ->header('Content-Disposition', 'attachment; filename="' . $filename . '"');
+    }
+
 
     /*creatrCSVメソッド　没
     public function createCSV(){
