@@ -17,7 +17,6 @@ use App\Http\Controllers\VaridatorController;
 
 //インデックス画面に移行
 Route::get('/pia_index', 'PayInfoController@index')->name('pia_index.list');
-
 //支払情報入力
 Route::get('/pianew_input', 'PayInfoController@newInput')->name('pianew.input');
 //バリデーション実行し、セッションに入力値を送信
@@ -42,6 +41,11 @@ Route::post('/piainquiry_confirm', 'PayInfoController@inquiryZIP')->name('piainq
 Route::get('/', function () {
     return redirect('/pia_index');
 });
+
+/*
+//インデックス画面に移行
+Route::get('/tk_port')->name('tkport.list');
+*/
 
 //入力内容確認の関係
 

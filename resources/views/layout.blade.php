@@ -11,7 +11,7 @@
     </head>
     <body>
         <nav class='navbar navbar-expand-md navbar-dark bg-dark fixed-top'>
-            <a class='navbar-brand' href={{route('pia_index.list')}}>家計簿アプリ　試作</a>	<!--左上のタイトル文字リンク-->
+            <a class='navbar-brand' href={{route('pia_index.list')}}>TK PORTFOLIO</a>	<!--左上のタイトル文字リンク-->
             
             <!--layouts/app.blade.phpよりコピー　ここから-->
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="{{ __('Toggle navigation') }}">
