@@ -11,17 +11,6 @@ use Validator;                        //バリデーション関係
 
 class PayInfoController extends Controller
 {
-    //バリデーション　明細入力確認用
-    private $new_items = ['pay_day','payee','accnt_class',
-                        'pay_detail','amount','rmk'];
-    private $new_validator = [
-        'pay_day'        => 'required',                     //支払日
-        'payee'          => 'required|max:20',              //支払先
-        'accnt_class'    => 'required',                     //科目
-        'pay_detail'     => 'required|max:20',              //支払内容
-        'amount'         => 'required|digits_between:1,10',      //金額（税込）
-        'rmk'            => 'nullable|max:50',              //備考
-        ];
         
     //PayInfoControllerオブジェクト初期化処理
     //ログアウト時に所定のメソッドを実行すると、自動的にログイン認証画面に移行する
@@ -32,13 +21,13 @@ class PayInfoController extends Controller
 
     //以下、メソッド
 
-    //インデックス画面に移行。
+    //インデックス画面に移行
     public function index()
     {
         return view('pia_index');
     }
 
-    //account_itemsテーブルから科目名を抽出し、支払情報入力画面に移行。
+    //account_itemsテーブルから科目名を抽出し、支払情報入力画面に移行
     public function newInput()
     {
         //セレクトボックスに使用する科目データ（科目名）を抽出
@@ -48,13 +37,23 @@ class PayInfoController extends Controller
 
     //バリデーション実行。適正ならセッションに入力値を送信し、'pianew.confirm'へリダイレクト。
     public function newSend(Request $request){
+
+        //バリデーション
+        $new_items = ['pay_day','payee','accnt_class',
+                            'pay_detail','amount','rmk'];
+        $new_validator = [
+            'pay_day'        => 'required',                     //支払日
+            'payee'          => 'required|max:20',              //支払先
+            'accnt_class'    => 'required',                     //科目
+            'pay_detail'     => 'required|max:20',              //支払内容
+            'amount'         => 'required|digits_between:1,10', //金額（税込）
+            'rmk'            => 'nullable|max:50',              //備考
+            ];
         
-        
-        
-        $inputs = $request->only($this->new_items);
+        $inputs = $request->only($new_items);
         
         //バリデーション実行。入力値が適正でない場合、支払情報入力画面に戻る。
-        $validator = Validator::make($inputs,$this->new_validator);
+        $validator = Validator::make($inputs,$new_validator);
         if($validator->fails()){
             return redirect()->route('pianew.input')
                 ->withInput()
@@ -116,18 +115,19 @@ class PayInfoController extends Controller
         return view("pianew_complete",compact('message'));
     }
 
-//照会入力ページに移動
+    //照会条件入力画面に移動
     public function inquiryInput()
     {
-        //account_itemsテーブルから科目名を抽出し、支払情報入力画面に移行。
+        //account_itemsテーブルから科目名を抽出し、照会条件入力画面に移行。
         $account_items = Account_item::all()->pluck('accnt_class','accnt_class');
         return view('piainquiry_input',compact('account_items'));
     }
 
-//明細照会ページに移動
+    //明細照会画面に移動
     public function inquiryConfirm(Request $request){
 
         //day_fromまたはday_toに入力がない場合、下限値または上限値を設定する
+        //併せて、照会条件を文字列として$period_mess変数に保存
         if(is_null($request->day_from) && is_null($request->day_to)){
             $request->day_from = '0000-01-01';
             $request->day_to = '9999-12-31';
@@ -149,25 +149,22 @@ class PayInfoController extends Controller
                 ->withErrors("FROMがTOの後日付になっています。");
         }
         
-        //piainquire_confirmに送る変数に値を保存
-        $inputs2 = array('day_from' => $request->day_from,
-                        'day_to' => $request->day_to,
-                        'accnt_class' => $request->accnt_class);
-
         //accnt_classの入力状況に応じて、テーブルからレコードを抽出
         $kamoku = $request->accnt_class;
         
+        //照会条件を文字列として$kamoku_mess変数に保存
         if(isset($kamoku)){
             $kamoku_mess = $kamoku;
         }else{
             $kamoku_mess = '全科目';
         }
         
-        //検索条件表示用メッセージ
+        //検索条件メッセージを$messages変数に保存。
+        //配列にしたのは、配列データでないとCSVを作成できないため。
         $messages = array('検索条件　' , '期間：' , $period_mess , '' , '' , '　|　' , '科目：' , $kamoku_mess);
         
         
-        //CSVデータ用。セッションに保存し、CSVデータ生成に利用する。
+        //クエリデータ（CSVデータ用）
         $pay_infos = Pay_info::where('user_id','=',Auth::user()->id)
                                                 //↓科目が指定されている場合、where句を加える
                                                 ->when($kamoku, function($query,$kamoku){
@@ -175,7 +172,7 @@ class PayInfoController extends Controller
                                                 })
                                                 ->whereBetween('pay_day',[$request->day_from,$request->day_to])
                                                 ->get()->toArray();            //PDOオブジェクトではなく配列形式で保存
-        //ページング用。照会画面に使用する。1ページにつき10行表示させるため、末尾に　->paginate(10)を追記。
+        //クエリデータ（照会画面用）。
         $pay_infos10 = Pay_info::where('user_id','=',Auth::user()->id)
                                                 //↓科目が指定されている場合、where句を加える
                                                 ->when($kamoku, function($query,$kamoku){
@@ -184,9 +181,9 @@ class PayInfoController extends Controller
                                                 ->whereBetween('pay_day',[$request->day_from,$request->day_to])
                                                 ->paginate(10);
         
-        //セッションに書き込む
+        //クエリデータ（CSVデータ用）と検索条件メッセージをセッションに書き込む
         session(compact('pay_infos','messages'));
-        //
+        //クエリデータ（照会画面用）と検索条件メッセージをViewに送る
         return view('piainquiry_confirm',compact('pay_infos10','messages'));
     }
 
@@ -207,23 +204,25 @@ class PayInfoController extends Controller
     }
 
 
-    //
+    //CSVデータ作成とダウンロード
     public function inquiryCSV(Request $request){
         //セッションからクエリごデータを抽出。
-        $usersFromSession = session('pay_infos');
-        $head = session('messages');
+        $usersFromSession = session('pay_infos');    //クエリデータ
+        $head = session('messages');    //検索条件メッセージ
     
         // CSVデータを生成
+        //項目列
         $head2 = ['明細管理番号','支払日','支払先','勘定科目','支払内容','金額（税込）'
                 ,'備考','ユーザーID','登録日','更新日'];
         $f = fopen('php://output', 'w');
         ob_start();
-        // ヘッダーの文字エンコーディングを変換し、書き込み
+        
+        // ヘッダーデータをエンコーディングし、書き込む
         mb_convert_variables('SJIS', 'UTF-8', $head);
         fputcsv($f, $head);
         mb_convert_variables('SJIS', 'UTF-8', $head2);
         fputcsv($f, $head2);
-        // データのエンコーディングを変換し、各行を書き込み
+        // クエリデータをエンコーディングし、各行を書き込む
         foreach ($usersFromSession as $pay_info) {
             mb_convert_variables('SJIS', 'UTF-8', $pay_info);
             fputcsv($f, $pay_info);
@@ -232,14 +231,15 @@ class PayInfoController extends Controller
         fclose($f);
         $csvContent = ob_get_clean();
         
-        //ファイル名
+        //ファイル名。
+        //指定がなければ、DL日時を含めたファイル名を設定。（"test yyyy-mm-dd hh_mm_ss.csv"）
         if(isset($request->filename)){
             $filename = $request->filename.'.csv';
         }else{
-            $filename = 'test' . date('Y-m-d H:i:s') . '.csv';
+            $filename = 'test ' . date('Y-m-d H:i:s') . '.csv';
         }
         
-        // ZIPファイルをダウンロードさせる
+        // CSVファイルをダウンロードする
         return response($csvContent)
             ->header('Content-Type','text/csv')
             ->header('Content-Disposition', 'attachment; filename="' . $filename . '"');
@@ -278,6 +278,3 @@ class PayInfoController extends Controller
     */
 
 }
-
-
-

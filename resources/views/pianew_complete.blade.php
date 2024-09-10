@@ -3,9 +3,9 @@
 @section('content')
 
     <h1>{{ $message }}</h1>
-    
-    <a href={{ route('pianew.input') }}>入力を続ける</a>
     <br>
-    <a href={{ route('pia_index.list') }}>戻る</a>
+    <a href={{ route('pianew.input') }}>入力を続ける</a>
+    <br><br>
+    <a href={{ route('pia_index.list') }}>インデックス画面に戻る</a>
     
 @endsection
