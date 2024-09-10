@@ -77,7 +77,8 @@ return [
         'array' => 'The :attribute must not have more than :value items.',
     ],
     'max' => [
-        'numeric' => 'The :attribute may not be greater than :max.',
+        //'numeric' => 'The :attribute may not be greater than :max.',        //日本語表示
+        'numeric' => ':attribute は :max　桁以内で入力してください',
         'file' => 'The :attribute may not be greater than :max kilobytes.',
         //'string' => 'The :attribute may not be greater than :max characters.',
         'string' => ':attribute　は　:max　文字以内で入力してください',        //日本語表示
@@ -93,7 +94,9 @@ return [
     ],
     'not_in' => 'The selected :attribute is invalid.',
     'not_regex' => 'The :attribute format is invalid.',
-    'numeric' => 'The :attribute must be a number.',
+    'not_regex' => 'The :attribute format is invalid.',
+    //'numeric' => ':attribute は半角数値で入力してください',        //日本語表示        
+    'numeric' => 'The :attribute must be a number.',        
     'password' => 'The password is incorrect.',
     'present' => 'The :attribute field must be present.',
     'regex' => 'The :attribute format is invalid.',
