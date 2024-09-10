@@ -6,25 +6,10 @@
 
     <h2>{{Auth::user()->name}} さんの明細</h2>
     
-    <a>
-        検索条件　　
-        @if($inputs2['day_from'] == '0000-01-01' && $inputs2['day_to'] == '9999-12-31')
-            <a>期間：全期間</a>
-        @elseif($inputs2['day_to'] == '9999-12-31')
-            <a>期間：{{ date($inputs2['day_from']) }} から</a>
-        @elseif($inputs2['day_from'] == '0000-01-01')
-            <a>期間：{{ date($inputs2['day_to']) }} まで</a>
-        @else
-            <a>期間：{{ date($inputs2['day_from']) }} から {{ date($inputs2['day_to']) }} まで</a>
-        @endif
-        <a>|</a>
-        @if(isset($inputs2['accnt_class']))
-            <a>科目：{{ $inputs2['accnt_class'] }}</a>
-        @else
-            <a>科目：全科目</a>
-        @endif
-    </a>
-
+    @foreach ($messages as $message)
+        <a>{{ $message }}</a>
+    @endforeach
+    
     <table class='table table-striped table-hover'>
         <tr>
             <th>明細管理番号</th>
