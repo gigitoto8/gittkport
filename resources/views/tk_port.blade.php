@@ -10,7 +10,7 @@
         <p><a href = {{ route('') }}>自己紹介へ</a></p>  
  -->
         <br>
-        <p><a href = {{ route('pia_index.list') }}>家計簿アプリ試作　へ</a></p>
+        <p><a href = {{ route('pia_index.list') }}>家計簿アプリ試作 　へ</a></p>
         
     <br><br>
     
