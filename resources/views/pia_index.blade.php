@@ -26,6 +26,6 @@
     <br>
     <br>
     
-        <p>メインページに戻る</p>        
+        <p><a href = {{ route('main') }}>メインページに戻る</a></p>        
 
 @endsection

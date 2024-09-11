@@ -15,6 +15,20 @@ use App\Http\Controllers\VaridatorController;
 |
 */
 
+//メインページ関連
+//メイン画面に移行
+Route::get('/main', 'MainController@main')->name('main');
+Route::get('/', function () {
+    return redirect('/main');
+});
+//プロフィールに移行
+Route::get('/profile', 'MainController@profile')->name('profile');
+
+//認証関連
+Auth::routes();
+Route::get('/home', 'HomeController@index')->name('home');
+
+//家計簿アプリ関連
 //インデックス画面に移行
 Route::get('/pia_index', 'PayInfoController@index')->name('pia_index.list');
 //支払情報入力
@@ -37,21 +51,3 @@ Route::post('/piainquiry_confirm', 'PayInfoController@inquiryCsv')->name('piainq
 /*照会ZIPデータ生成、ダウンロード（）
 Route::post('/piainquiry_confirm', 'PayInfoController@inquiryZIP')->name('piainquiry.zip');
 */
-
-Route::get('/', function () {
-    return redirect('/pia_index');
-});
-
-/*
-//インデックス画面に移行
-Route::get('/tk_port')->name('tkport.list');
-*/
-
-//入力内容確認の関係
-
-
-
-//認証関係
-Auth::routes();
-
-Route::get('/home', 'HomeController@index')->name('home');

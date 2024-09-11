@@ -5,13 +5,13 @@
         <meta name='viewport' content='width=device-width, initial-scale=1, shrink-to-fit=no'>
         <meta name='csrf-token' content='{{ csrf_token() }}'>       <!-- ログイン関係で追加 -->
         <link rel='stylesheet' href='https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css' >
-        <title>家計簿アプリ　試作</title>						<!--ウインドウ　タイトル-->
+        <title>TK_Portfolio</title>						<!--ウインドウ　タイトル-->
         <style>body {padding-top: 80px;}</style>    <!--余白-->
         <script src='{{ asset("js/app.js") }}' defer></script>      <!-- ログイン関係で追加　javascriptを読み込むタイミングを調整する -->
     </head>
     <body>
         <nav class='navbar navbar-expand-md navbar-dark bg-dark fixed-top'>
-            <a class='navbar-brand' href={{route('pia_index.list')}}>TK PORTFOLIO</a>	<!--左上のタイトル文字リンク-->
+            <a class='navbar-brand' href='/main'>TK PORTFOLIO</a>	<!--左上のタイトル文字リンク-->
             
             <!--layouts/app.blade.phpよりコピー　ここから-->
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="{{ __('Toggle navigation') }}">
