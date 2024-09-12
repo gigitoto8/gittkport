@@ -1,9 +1,10 @@
 <?php
 
+use Illuminate\Support\Facades\Route;
 //バリデーション関係
 use App\Http\Controllers\VaridatorController;
-
-
+//ダウンロード関係
+use App\Http\Controllers\DownloadController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -50,4 +51,10 @@ Route::get('/piainquiry_confirm', 'PayInfoController@inquiryConfirm')->name('pia
 Route::post('/piainquiry_confirm', 'PayInfoController@inquiryCsv')->name('piainquiry.csv');
 /*照会ZIPデータ生成、ダウンロード（）
 Route::post('/piainquiry_confirm', 'PayInfoController@inquiryZIP')->name('piainquiry.zip');
+*/
+
+Route::get('/download/{filename}', 'DownloadController@downloadFile')->name('download.file');
+//ダウンロード関係
+/*
+Route::get('/download/', 'DownloadController@downloadFile')->name('download.file');
 */

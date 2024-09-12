@@ -4,8 +4,10 @@
 
     <h1>profile</h1>
     
-    
+
+    <br>
+
     <p><a href = {{ route('main') }}>メインページに戻る</a></p>         
-    
+
 
 @endsection
