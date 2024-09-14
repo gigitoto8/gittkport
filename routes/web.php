@@ -39,9 +39,7 @@ Route::post('/pianew_input', "PayInfoController@newSend")->name("pianew.send");
 //入力内容確認
 Route::get('/pianew_confirm', "PayInfoController@newConfirm")->name("pianew.confirm");
 //入力内容をテーブルに登録
-Route::post('/pianew_confirm','PayInfoController@newStore')->name('pianew.store');
-//入力完了の表示
-Route::get('/pianew_complete', "PayInfoController@newComplete")->name("pianew.complete");    
+Route::post('/pianew_confirm','PayInfoController@newStore')->name('pianew.store');   
 
 //明細照会条件入力
 Route::get('/piainquiry_input', 'PayInfoController@inquiryInput')->name('piainquiry.input');

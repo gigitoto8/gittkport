@@ -28,11 +28,15 @@ class PayInfoController extends Controller
     }
 
     //account_itemsテーブルから科目名を抽出し、支払情報入力画面に移行
-    public function newInput()
+    public function newInput(Request $request)
     {
+        $kanryo2 = null;                            //pianew_inputに渡す変数の初期化
+        if(isset($request)){                        //pianew_storeから移行した場合、$requestには値が入っている
+            $kanryo2 = '入力は完了しました';            //
+        }
         //セレクトボックスに使用する科目データ（科目名）を抽出
         $account_items = Account_item::all()->pluck('accnt_class','accnt_class');
-        return view('pianew_input',compact('account_items'));
+        return view('pianew_input',compact('account_items','kanryo2'));
     }
 
     //バリデーション実行。適正ならセッションに入力値を送信し、'pianew.confirm'へリダイレクト。
@@ -100,19 +104,9 @@ class PayInfoController extends Controller
         
         //セッション中身消去
         $request->session()->forget("form_input");
-        $message = "入力は完了しました";                                    //pianew_completeに表示させる文字
+        $kanryo = 1;                                                //入力完了フラグ
         
-        return redirect()->route('pianew.complete',compact('message'));    //$message変数をcompleteメソッドに渡す
-    }
-
-    //入力完了画面表示
-    public function newComplete(Request $request){
-        if($request->message != "入力は完了しました"){                    //$messageの内容確認。URL直打対策も兼ねる
-            return redirect()->route('pianew.input');
-        }
-        $message = $request->message;
-        $request->message = 0;
-        return view("pianew_complete",compact('message'));
+        return redirect()->route('pianew.input',compact('kanryo'));    //$kanryo変数をpianewInputメソッドに渡す
     }
 
     //照会条件入力画面に移動

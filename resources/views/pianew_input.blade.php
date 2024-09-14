@@ -12,6 +12,12 @@
     </ul>
     </div>
     @endif
+    
+    <!-- newStoreメソッドから移動した場合、メッセージ'入力は完了しました'を表示する -->
+    @if(isset($kanryo2))
+    <a style='color:green;'><strong>{{ $kanryo2 }}</strong><a>
+    @endif
+    <br><br>
 
     <h1>明細入力</h1>
     
