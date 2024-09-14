@@ -21,7 +21,7 @@
             <a href="{{ url('/download/tkport_manual.docx') }}">ポートフォリオ説明書ダウンロードする</a>
             <br>
             <br>
-            <p><a href = {{ route('pia_index.list') }}>家計簿アプリ（試作版）へ</a></p>
+            <p><a href = {{ route('pia.main') }}>家計簿アプリ（試作版）へ</a></p>
             <br>
             
         @endif

@@ -6,6 +6,6 @@
     <br>
     <a href={{ route('pianew.input') }}>入力を続ける</a>
     <br><br>
-    <a href={{ route('pia_index.list') }}>インデックス画面に戻る</a>
+    <a href={{ route('pia.main') }}>家計簿アプリ　メインページに戻る</a>
     
 @endsection

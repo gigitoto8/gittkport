@@ -31,7 +31,7 @@ Route::get('/home', 'HomeController@index')->name('home');
 
 //家計簿アプリ関連
 //インデックス画面に移行
-Route::get('/pia_index', 'PayInfoController@index')->name('pia_index.list');
+Route::get('/pia_main', 'PayInfoController@piaMain')->name('pia.main');
 //支払情報入力
 Route::get('/pianew_input', 'PayInfoController@newInput')->name('pianew.input');
 //バリデーション実行し、セッションに入力値を送信

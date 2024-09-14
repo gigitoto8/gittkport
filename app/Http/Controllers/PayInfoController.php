@@ -22,9 +22,9 @@ class PayInfoController extends Controller
     //以下、メソッド
 
     //インデックス画面に移行
-    public function index()
+    public function piaMain()
     {
-        return view('pia_index');
+        return view('pia_main');
     }
 
     //account_itemsテーブルから科目名を抽出し、支払情報入力画面に移行

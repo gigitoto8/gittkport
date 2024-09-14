@@ -55,7 +55,7 @@
     {{ Form::close() }}
             
     <div>
-        <a href={{ route('pia_index.list') }}>戻る</a>
+        <a href={{ route('pia.main') }}>戻る</a>
     </div>
     
 @endsection

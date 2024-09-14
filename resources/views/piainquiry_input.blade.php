@@ -48,6 +48,6 @@
             <input type="button" value="照会" onClick="submit();">
     </form>
     <div>
-        <a href={{ route('pia_index.list') }}>戻る</a>
+        <a href={{ route('pia.main') }}>戻る</a>
     </div>
 @endsection
