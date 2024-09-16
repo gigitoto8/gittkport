@@ -29,18 +29,22 @@ Route::get('/profile', 'MainController@profile')->name('profile');
 Auth::routes();
 Route::get('/home', 'HomeController@index')->name('home');
 
+//ダウンロード関係
+Route::get('/download/{filename}', 'DownloadController@downloadFile')->name('download.file');
+
 //家計簿アプリ関連
 //インデックス画面に移行
 Route::get('/pia_main', 'PayInfoController@piaMain')->name('pia.main');
-//支払情報入力
+//（機能）支払情報入力
+//入力画面
 Route::get('/pianew_input', 'PayInfoController@newInput')->name('pianew.input');
-//バリデーション実行し、セッションに入力値を送信
+//バリデーション実行、セッションに入力値を送信
 Route::post('/pianew_input', "PayInfoController@newSend")->name("pianew.send");
 //入力内容確認
 Route::get('/pianew_confirm', "PayInfoController@newConfirm")->name("pianew.confirm");
 //入力内容をテーブルに登録
 Route::post('/pianew_confirm','PayInfoController@newStore')->name('pianew.store');   
-
+//（機能）明細照会
 //明細照会条件入力
 Route::get('/piainquiry_input', 'PayInfoController@inquiryInput')->name('piainquiry.input');
 //明細照会確認へ
@@ -51,8 +55,6 @@ Route::post('/piainquiry_confirm', 'PayInfoController@inquiryCsv')->name('piainq
 Route::post('/piainquiry_confirm', 'PayInfoController@inquiryZIP')->name('piainquiry.zip');
 */
 
-Route::get('/download/{filename}', 'DownloadController@downloadFile')->name('download.file');
-//ダウンロード関係
 /*
 Route::get('/download/', 'DownloadController@downloadFile')->name('download.file');
 */

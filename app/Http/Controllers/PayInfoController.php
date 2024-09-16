@@ -31,7 +31,7 @@ class PayInfoController extends Controller
     public function newInput(Request $request)
     {
         $kanryo2 = null;                            //pianew_inputに渡す変数の初期化
-        if(isset($request)){                        //pianew_storeから移行した場合、$requestには値が入っている
+        if(isset($request->kanryo)){                        //pianew_storeから移行した場合、$requestには値が入っている
             $kanryo2 = '入力は完了しました';            //
         }
         //セレクトボックスに使用する科目データ（科目名）を抽出
