@@ -14,8 +14,7 @@ class CreateAccountItemsTable extends Migration
     public function up()
     {
         Schema::create('account_items', function (Blueprint $table) {
-            $table->bigIncrements('user_id');
-            $table->integer('class_id');
+            $table->bigIncrements('id');
             $table->string('accnt_class');
             $table->timestamps();
         });
