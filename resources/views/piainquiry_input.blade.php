@@ -13,7 +13,7 @@
     </div>
     @endif
 
-    <h2>明細照会</h2>
+    <h2>明細照会条件指定</h2>
     <p>照会したい期間および勘定科目の検索条件を指定してください。</p>
     
     <form action={{ route('piainquiry.confirm') }} method="get">
