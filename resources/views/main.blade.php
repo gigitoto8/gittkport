@@ -32,8 +32,10 @@
         @else
             <!-- ログイン時に表示 -->
             <p>ようこそ {{Auth::user()->name}} さん</p>
+            <!--
             <br>
             <p><a href = {{ route('profile') }}>自己紹介へ</a></p>
+            -->
             <br>
             <a href="{{ url('/download/家計簿アプリ説明資料　2024-09-19.docx') }}">アプリ説明資料をダウンロードする</a>
             <br>
