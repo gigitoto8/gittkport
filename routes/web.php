@@ -32,6 +32,10 @@ Route::get('/home', 'HomeController@index')->name('home');
 //ダウンロード関係
 Route::get('/download/{filename}', 'DownloadController@downloadFile')->name('download.file');
 
+//更新履歴関係
+Route::get('/uplhis/', 'UpdateHistoryController@newHis')->name('uplhis.new');
+
+
 //家計簿アプリ関連
 //インデックス画面に移行
 Route::get('/pia_main', 'PayInfoController@piaMain')->name('pia.main');
