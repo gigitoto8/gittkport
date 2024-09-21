@@ -19,7 +19,7 @@ class CreatePayInfosTable extends Migration
             $table->string('payee'); 
             $table->string('accnt_class');
             $table->text('pay_detail');
-            $table->int('amount');
+            $table->integer('amount');
             $table->text('rmk');
             $table->integer('user_id');
             $table->timestamps();
