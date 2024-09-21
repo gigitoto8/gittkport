@@ -22,7 +22,7 @@
     <h1>明細入力</h1>
     
     {{ Form::open(['route' => 'pianew.send' , 'onsubmit'=> false]) }}
-
+        @csrf
         <div class='form-group'>
             {{ Form::label('pay_day','支払日　：') }}
             {{ Form::date('pay_day', 'YYYYmmdd')}}

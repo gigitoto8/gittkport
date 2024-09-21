@@ -17,7 +17,7 @@ class CreatePayInfosTable extends Migration
             $table->bigIncrements('id');
             $table->date('pay_day');
             $table->string('payee'); 
-            $table->string('accnt_item');
+            $table->string('accnt_class');
             $table->text('pay_detail');
             $table->int('amount');
             $table->text('rmk');
