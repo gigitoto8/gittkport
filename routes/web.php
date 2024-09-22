@@ -33,7 +33,12 @@ Route::get('/home', 'HomeController@index')->name('home');
 Route::get('/download/{filename}', 'DownloadController@downloadFile')->name('download.file');
 
 //更新履歴関係
-Route::get('/uplhis/', 'UpdateHistoryController@newHis')->name('uplhis.new');
+//更新履歴メイン画面
+Route::get('/uplhis_main', 'UpdateHistoryController@uplhisMain')->name('uplhis.main');
+//更新履歴入力画面
+Route::get('/uplhis_input', 'UpdateHistoryController@uplhisInput')->name('uplhis.input');
+//更新履歴
+
 
 
 //家計簿アプリ関連
