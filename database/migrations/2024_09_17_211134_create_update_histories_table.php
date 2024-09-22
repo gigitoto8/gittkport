@@ -16,7 +16,7 @@ class CreateUpdateHistoriesTable extends Migration
         Schema::create('update_histories', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->date('update_date');
-            $table->string('title');
+            $table->string('detali');
             $table->timestamps();
         });
     }
