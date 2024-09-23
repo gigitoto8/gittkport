@@ -14,7 +14,7 @@ class ChangeColumnAttributesInAccountItems extends Migration
     public function up()
     {
         Schema::table('account_items', function (Blueprint $table) {
-            $table->bigIncrements('id',5)->change(); // 文字列型、長さ5
+            $table->bigIncrements('id',5)->change(); //※キーカラム変更不可
             $table->string('accnt_class',20)->comment('科目')->change(); //文字数・コメント変更
         });
     }
