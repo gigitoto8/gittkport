@@ -18,7 +18,7 @@
             <br>
             <p><a href = {{ route('profile') }}>自己紹介へ</a></p>
             <br>
-            <a href="{{ url('/download/tkport_manual.docx') }}">ポートフォリオ説明書ダウンロードする</a>
+            <a href="{{ url('/download/家計簿アプリ説明資料　2024-09-19.docx') }}">ポートフォリオ説明書ダウンロードする</a>
             <br>
             <br>
             <p><a href = {{ route('pia.main') }}>家計簿アプリ（試作版）へ</a></p>
