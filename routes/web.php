@@ -45,7 +45,7 @@ Route::get('/pianew_confirm', "PayInfoController@newConfirm")->name("pianew.conf
 //入力内容をテーブルに登録
 Route::post('/pianew_confirm','PayInfoController@newStore')->name('pianew.store');   
 //（機能）明細照会
-//明細照会条件入力
+//明細照会条件指定
 Route::get('/piainquiry_input', 'PayInfoController@inquiryInput')->name('piainquiry.input');
 //明細照会確認へ
 Route::get('/piainquiry_confirm', 'PayInfoController@inquiryConfirm')->name('piainquiry.confirm');
