@@ -17,7 +17,18 @@ class MainController extends Controller
     //メイン画面に移行
     public function main()
     {
-        return view('main');
+        
+        //↓説明資料ダウンロードに関する処理
+        // 対象ディレクトリ内の「資料 YYYY-MM-DD.docx」に一致するファイルを取得
+        $nameparts = glob(storage_path('app/家計簿アプリ説明資料　*.docx'));
+        if (!empty($nameparts)) {
+            // ファイル名を分離して最新のファイルを取得
+            $filename = basename($nameparts[0]);  // 必要に応じて最新のファイルを選択
+        } else {
+            $filename = null; // ファイルがない場合
+        }
+        
+        return view('main',compact('filename'));
     }
     
     //プロフィール画面に移行

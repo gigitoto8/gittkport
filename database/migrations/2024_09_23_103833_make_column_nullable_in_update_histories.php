@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateAccountItemsTable extends Migration
+class MakeColumnNullableInUpdateHistories extends Migration
 {
     /**
      * Run the migrations.
@@ -13,10 +13,8 @@ class CreateAccountItemsTable extends Migration
      */
     public function up()
     {
-        Schema::create('account_items', function (Blueprint $table) {
-            $table->bigIncrements('id');
-            $table->string('accnt_class');
-            $table->timestamps();
+        Schema::table('update_histories', function (Blueprint $table) {
+            $table->string('rmk')->nullable()->change();
         });
     }
 
@@ -27,6 +25,8 @@ class CreateAccountItemsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('account_items');
+        Schema::table('update_histories', function (Blueprint $table) {
+            //
+        });
     }
 }

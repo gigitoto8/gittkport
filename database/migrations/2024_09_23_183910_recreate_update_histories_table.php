@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateAccountItemsTable extends Migration
+class RecreateUpdateHistoriesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,9 +13,12 @@ class CreateAccountItemsTable extends Migration
      */
     public function up()
     {
-        Schema::create('account_items', function (Blueprint $table) {
+        //テーブル再作成の処理を記述
+        Schema::create('update_histories', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->string('accnt_class');
+            $table->date('update_date'); // 更新日
+            $table->text('detail');    // 詳細
+            $table->text('rmk')->nullable();       // 備考
             $table->timestamps();
         });
     }
@@ -27,6 +30,6 @@ class CreateAccountItemsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('account_items');
+        //
     }
 }

@@ -32,6 +32,14 @@ Route::get('/home', 'HomeController@index')->name('home');
 //ダウンロード関係
 Route::get('/download/{filename}', 'DownloadController@downloadFile')->name('download.file');
 
+//更新履歴関係
+//更新履歴メイン画面
+Route::get('/updhis_main', 'UpdateHistoryController@updhisMain')->name('updhis.main');
+//更新履歴入力画面
+Route::get('/updhis_input', 'UpdateHistoryController@updhisInput')->name('updhis.input');
+//入力内容をテーブルに登録
+Route::post('/updhis_store','UpdateHistoryController@updhisStore')->name('updhis.store');   
+
 //家計簿アプリ関連
 //インデックス画面に移行
 Route::get('/pia_main', 'PayInfoController@piaMain')->name('pia.main');

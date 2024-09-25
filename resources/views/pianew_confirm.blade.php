@@ -5,7 +5,7 @@
     <h1>入力内容確認</h1>
     <a>以下の内容でよろしいですか？</a>
     {{ Form::open(['route' => 'pianew.store' , 'onsubmit'=> false]) }}
-        
+        @csrf
         <div class='form-group'>
             {{ Form::label('pay_day','支払日　：') }}
             {{ $input['pay_day'] }}
