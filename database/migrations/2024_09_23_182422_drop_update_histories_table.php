@@ -13,7 +13,8 @@ class DropUpdateHistoriesTable extends Migration
      */
     public function up()
     {
-
+        //テーブル削除
+        Schema::dropIfExists('update_histories');
     }
 
     /**
@@ -23,8 +24,7 @@ class DropUpdateHistoriesTable extends Migration
      */
     public function down()
     {
-        //テーブル削除
-        Schema::dropIfExists('update_histories');
+        
 
     }
 }
