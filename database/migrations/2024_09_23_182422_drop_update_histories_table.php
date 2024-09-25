@@ -24,7 +24,8 @@ class DropUpdateHistoriesTable extends Migration
      */
     public function down()
     {
-        
+
+
 
     }
 }
