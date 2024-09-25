@@ -15,7 +15,6 @@ class DownloadController extends Controller
         if (!file_exists($filePath)) {
             return abort(404, 'File not found.');
         }
-
         return response()->download($filePath);
             
         /*

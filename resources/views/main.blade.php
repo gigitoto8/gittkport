@@ -37,7 +37,11 @@
             <p><a href = {{ route('profile') }}>自己紹介へ</a></p>
             -->
             <br>
-            <a href="{{ url('/download/家計簿アプリ説明資料　2024-09-19.docx') }}">アプリ説明資料をダウンロードする</a>
+            @if($filename)
+                <a href="{{ url('/download/' . $filename) }}">アプリ説明資料をダウンロード</a>
+            @else
+                <p>ダウンロード可能なファイルがありません。</p>
+            @endif
             <br>
             <br>
             <p><a href = {{ route('pia.main') }}>家計簿アプリ（試作版）へ</a></p>
