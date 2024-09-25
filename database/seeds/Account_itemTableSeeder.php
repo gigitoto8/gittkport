@@ -11,6 +11,7 @@ class Account_itemTableSeeder extends Seeder
      */
     public function run()
     {
+        
         DB::table('account_items')->insert([
             [
                 'id' => '00001',
