@@ -34,12 +34,11 @@ Route::get('/download/{filename}', 'DownloadController@downloadFile')->name('dow
 
 //更新履歴関係
 //更新履歴メイン画面
-Route::get('/uplhis_main', 'UpdateHistoryController@uplhisMain')->name('uplhis.main');
+Route::get('/updhis_main', 'UpdateHistoryController@updhisMain')->name('updhis.main');
 //更新履歴入力画面
-Route::get('/uplhis_input', 'UpdateHistoryController@uplhisInput')->name('uplhis.input');
-//更新履歴
-
-
+Route::get('/updhis_input', 'UpdateHistoryController@updhisInput')->name('updhis.input');
+//入力内容をテーブルに登録
+Route::post('/updhis_store','UpdateHistoryController@updhisStore')->name('updhis.store');   
 
 //家計簿アプリ関連
 //インデックス画面に移行
