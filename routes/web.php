@@ -59,10 +59,12 @@ Route::get('/piainquiry_input', 'PayInfoController@inquiryInput')->name('piainqu
 Route::get('/piainquiry_confirm', 'PayInfoController@inquiryConfirm')->name('piainquiry.confirm');
 //照会CSVデータ生成、ダウンロード
 Route::post('/piainquiry_confirm', 'PayInfoController@inquiryCsv')->name('piainquiry.csv');
-/*照会ZIPデータ生成、ダウンロード（）
+/*
+照会ZIPデータ生成、ダウンロード（）
 Route::post('/piainquiry_confirm', 'PayInfoController@inquiryZIP')->name('piainquiry.zip');
 */
-
-/*
-Route::get('/download/', 'DownloadController@downloadFile')->name('download.file');
-*/
+//（機能）月別出費表
+//明細照会条件指定
+Route::get('/expense_list_input', 'PayInfoController@expenseListInput')->name('expense_list.input');
+//明細照会確認へ
+Route::get('/expense_list_confirm', 'PayInfoController@expenseListConfirm')->name('expense_list.confirm');
