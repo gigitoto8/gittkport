@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\main;
+use App\UpdateHistory;
 use Auth;
 use Illuminate\Http\Request;
 
@@ -17,6 +18,8 @@ class MainController extends Controller
     //メイン画面に移行
     public function main()
     {
+        //更新履歴データ
+        $re_his = UpdateHistory::orderBy('update_date', 'desc')->get();
         
         //↓説明資料ダウンロードに関する処理
         // 対象ディレクトリ内の「資料 YYYY-MM-DD.docx」に一致するファイルを取得
@@ -28,7 +31,7 @@ class MainController extends Controller
             $filename = null; // ファイルがない場合
         }
         
-        return view('main',compact('filename'));
+        return view('main',compact('filename','re_his'));
     }
     
     //プロフィール画面に移行
