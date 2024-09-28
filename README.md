@@ -1,80 +1,49 @@
-# gittkport
+# gittkport  
 
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400"></a></p>
+## gittkportについて
+  
+1.  
+これまでに得たスキルをアウトプットするため、ポートフォリオの制作に取り組みました。  
+また、github活用のため、本リポジトリを作成しました。
+  
+2.アプリ概要  
+　・家計の支出を記録するアプリ。  
+　・機能は、支払情報記録と支出明細照会の２種類。  
+　・照会した明細はCSV形式のファイルでダウンロードが可能。  
+　※一部のユーザーのみに対しアプリURLを公開しています。  
+  
+3.開発環境および選定理由  
+　・インフラ　　　　：　PaizaCloud（Webサーバ、DBサーバ、エディタ）  
+　・技術　　　　　　：　PHP 7.4.1 ,Laravel Framework 6.20.26 , MySQL 14.14 ,Bootstrap 4.0.0  
+　・主要パッケージ　：　Laravel ui 1.3.0 , Lravel Collective html 6.4.1  
+　・その他　　　　　：　PHPMyAdmin 5.0.1 , Composer 1.9.2  
+　・技術選定理由　　：　PHPとLaravelは、現時点で需要が高い技術の一つに挙げられているため、  
+　　　　　　　　　　　身に付けることで採用において有利になると考えました。  
+　　　　　　　　　　　インフラについては、構築の経験が皆無でしたが、インフラがある程度整ってい  
+　　　　　　　　　　　るPaizaCloudの存在を知り、未経験でも手軽に設定ができると考え、PaizaCloud  
+　　　　　　　　　　　を選定しました。  
 
-<p align="center">
-<a href="https://travis-ci.org/laravel/framework"><img src="https://travis-ci.org/laravel/framework.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://poser.pugx.org/laravel/framework/d/total.svg" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://poser.pugx.org/laravel/framework/v/stable.svg" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://poser.pugx.org/laravel/framework/license.svg" alt="License"></a>
-</p>
+4.機能説明  
+　○支払情報入力  
+　　1 支払情報入力画面  
+　　フォームに各項目を入力。科目はセレクトボックスから科目（accnt_itemsテーブルから抽出した文字列）を選択する。  
+　　“入力ボタン”を押すと、バリデーションが行われる。入力に不備があると、画面上側に不備に応じた  
+　　警告文が表示される。入力に問題がなければ入力情報確認に移行する。  
+　　2 入力情報確認  
+　　表示される入力情報を確認する。内容に問題がなければ”登録”ボタンを押す。その直後、入力情報  
+　　がデータベースに登録され、そのまま支払情報入力に移行する。  
+　　”やり直す”ボタンを押すと、入力値を保持したまま支払情報入力に戻る。  
+　○明細照会  
+　　1 明細照会条件指定  
+　　照会期間の入力と勘定科目の選択により照会条件を指定する。指定後、照会ボタンを押すと、指定  
+　　条件と登録ユーザーidを基にpay_infosテーブルからレコードを抽出し、明細照会に移行する。  
+　　2 明細照会  
+　　ページング機能により、1ページにつき10件のレコードが表示される。  
+　　明細データを入手したい場合、画面下側にあるフォームの”ダウンロード”ボタンを押すことで、  
+　　CSV形式のファイルをダウンロードすることが可能。  
 
-## About Laravel
-
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
-
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
-
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
-
-## Learning Laravel
-
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
-
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains over 1500 video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
-
-## Laravel Sponsors
-
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the Laravel [Patreon page](https://patreon.com/taylorotwell).
-
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Cubet Techno Labs](https://cubettech.com)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[British Software Development](https://www.britishsoftware.co)**
-- **[Webdock, Fast VPS Hosting](https://www.webdock.io/en)**
-- **[DevSquad](https://devsquad.com)**
-- [UserInsights](https://userinsights.com)
-- [Fragrantica](https://www.fragrantica.com)
-- [SOFTonSOFA](https://softonsofa.com/)
-- [User10](https://user10.com)
-- [Soumettre.fr](https://soumettre.fr/)
-- [CodeBrisk](https://codebrisk.com)
-- [1Forge](https://1forge.com)
-- [TECPRESSO](https://tecpresso.co.jp/)
-- [Runtime Converter](http://runtimeconverter.com/)
-- [WebL'Agence](https://weblagence.com/)
-- [Invoice Ninja](https://www.invoiceninja.com)
-- [iMi digital](https://www.imi-digital.de/)
-- [Earthlink](https://www.earthlink.ro/)
-- [Steadfast Collective](https://steadfastcollective.com/)
-- [We Are The Robots Inc.](https://watr.mx/)
-- [Understand.io](https://www.understand.io/)
-- [Abdel Elrafa](https://abdelelrafa.com)
-- [Hyper Host](https://hyper.host)
-- [Appoly](https://www.appoly.co.uk)
-- [OP.GG](https://op.gg)
-
-## Contributing
-
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
-
-## Code of Conduct
-
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
-
-## Security Vulnerabilities
-
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
-
-## License
-
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+<!--   
+5. その他、  
+　○命名規則について  
+　　命名規則に一貫性がない箇所がありますが、後日修正いたします。
+-->
