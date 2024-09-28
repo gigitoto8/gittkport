@@ -11,15 +11,15 @@
  ※一部のユーザーのみに対しアプリURLを公開しています。  
   
 ３．開発環境および選定理由  
-・インフラ　　　　：　PaizaCloud（Webサーバ、DBサーバ、エディタ）
-　・技術　　　　　　：　PHP 7.4.1 ,Laravel Framework 6.20.26 , MySQL 14.14 ,Bootstrap 4.0.0
-　・主要パッケージ　：　Laravel ui 1.3.0 , Lravel Collective html 6.4.1
-  ・その他　　　　　：　PHPMyAdmin 5.0.1 , Composer 1.9.2
-  ・技術選定理由　　：　PHPとLaravelは、現時点で需要が高い技術の一つに挙げられているため、
-  　　　　　　　　　　　身に付けることで採用において有利になると考えました。
-                    　インフラについては、構築の経験が皆無でしたが、インフラがある程度整ってい
-                    　るPaizaCloudの存在を知り、未経験でも手軽に設定ができると考え、PaizaCloud
-                    　を選定しました。
+・インフラ　　　　：　PaizaCloud（Webサーバ、DBサーバ、エディタ）  
+・技術　　　　　　：　PHP 7.4.1 ,Laravel Framework 6.20.26 , MySQL 14.14 ,Bootstrap 4.0.0  
+・主要パッケージ　：　Laravel ui 1.3.0 , Lravel Collective html 6.4.1  
+・その他　　　　　：　PHPMyAdmin 5.0.1 , Composer 1.9.2  
+・技術選定理由　　：　PHPとLaravelは、現時点で需要が高い技術の一つに挙げられているため、  
+　　　　　　　　　　　身に付けることで採用において有利になると考えました。  
+                  　インフラについては、構築の経験が皆無でしたが、インフラがある程度整ってい  
+                  　るPaizaCloudの存在を知り、未経験でも手軽に設定ができると考え、PaizaCloud  
+                  　を選定しました。  
 
 ４．機能説明
     ○支払情報入力
