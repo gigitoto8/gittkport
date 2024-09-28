@@ -64,7 +64,8 @@ Route::post('/piainquiry_confirm', 'PayInfoController@inquiryCsv')->name('piainq
 Route::post('/piainquiry_confirm', 'PayInfoController@inquiryZIP')->name('piainquiry.zip');
 */
 //（機能）月別出費表
-//明細照会条件指定
-Route::get('/expense_list_input', 'PayInfoController@expenseListInput')->name('expense_list.input');
-//明細照会確認へ
-Route::get('/expense_list_confirm', 'PayInfoController@expenseListConfirm')->name('expense_list.confirm');
+//月別出費表　条件指定
+Route::get('/expense_list_select', 'PayInfoController@expenseListSelect')->name('expense_list.select
+');
+//月別出費表表示
+Route::get('/expense_list_show', 'PayInfoController@expenseListShow')->name('expense_list.show');
