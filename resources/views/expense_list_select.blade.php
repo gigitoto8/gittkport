@@ -14,9 +14,9 @@
     @endif
 
     <h2>月別出費表　条件指定</h2>
-    <p>期間を指定してください。</p>
+    <p>年・月基準で期間を指定してください。</p>
     
-    <form action={{ route('piainquiry.confirm') }} method="get">
+    <form action={{ route('expense_list.show') }} method="get">
         @csrf
             <div style="border-width:thin; border-style:dashed;padding:0px 20px 20px;border-color:#777777;">
                 <table>
@@ -27,24 +27,20 @@
                         <td>To</td>
                     </tr>
                     <tr>
-                        <td>照会期間　：　</td>
-                        <td>{{ Form::date('day_from', 'YYYY-mm-dd') }}</td>
+                        <td>期間　：　</td>
+                        <td>{{ Form::month('dayFrom', 'YYYY-mm') }}</td>
                         <td>　~　</td>
-                        <td>{{ Form::date('day_to', 'YYYY-mm-dd') }}</td>
+                        <td>{{ Form::month('dayTo', 'YYYY-mm') }}</td>
                     </tr>
                 </table>
                 <div style="font-size: small;">
-                        <a>※全期間を照会する場合は入力不要。</a><br>
-                        <a>※期間を指定する場合はFromまたはToに入力すること。<br>
-                        　両方入力する場合、Fromの日付がToの日付より後にならないこと。</a>
+                    <a>・全期間を照会する場合は入力不要。</a><br>
+                    <a>・期間を指定する場合はFromまたはToに入力すること。</a><br>
+                    <a>・両方入力する場合、Fromの時期がToの時期より後にならないこと。</a>
                 </div>
             </div>
             <br>
-            <div style="border-width:thin; border-style:dashed;padding:20px 20px 20px;0px 20px 20px;border-color:#777777;">
-                <td>照会科目　：　</td>
-                {{ Form::select('accnt_class',$account_items) }}<br>
-                <a style="font-size: small;">※科目を指定しない場合は選択不要。</a><br>
-            </div>
+            
             <br>
             <input type="button" value="照会" onClick="submit();">
     </form>

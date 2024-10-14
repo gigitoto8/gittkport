@@ -19,7 +19,11 @@
         <br>
         <p><a href = {{ route('pianew.input') }}>支払情報入力</a></p>
         <br>
-        <p><a href = {{ route('piainquiry.input') }}>支払情報照会</a></p>  
+        <p><a href = {{ route('piainquiry.input') }}>支払情報照会</a></p>
+        <!--
+        <br>
+        <p><a href = {{ route('expense_list.select') }}>月別支払状況</a></p>  
+        -->
         
     @endif
     

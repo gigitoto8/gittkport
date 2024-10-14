@@ -5,9 +5,11 @@ namespace App\Http\Controllers;
 use App\Pay_info;
 use App\Account_item;
 use Illuminate\Http\Request;
-use Auth;                             //
+use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Support\Facades\DB;    //クエリビルダを利用
+use Auth;                             //認証
 use Validator;                        //バリデーション関係
-
+use Carbon\Carbon;                    // Carbonを使用
 
 class PayInfoController extends Controller
 {
@@ -239,36 +241,102 @@ class PayInfoController extends Controller
             ->header('Content-Disposition', 'attachment; filename="' . $filename . '"');
     }
 
-    /*
-    public function inquiryZIP(){
-        $pay_infos = session()->get('pay_infos');
-        $head = ['明細管理番号','支払日','支払先','勘定科目','支払内容','金額（税込）'
-                ,'備考','ユーザーID','登録日','更新日'];
-    
-        // CSVデータを出力するためのストリームを生成
-        $f = fopen('test.csv', 'w');
-        // ヘッダーの文字エンコーディングを変換し、書き込み
-        mb_convert_variables('SJIS', 'UTF-8', $head);
-        fputcsv($f, $head);
-        // データのエンコーディングを変換し、各行を書き込み
-        foreach ($pay_infos as $pay_info) {
-            mb_convert_variables('SJIS', 'UTF-8', $pay_info);
-            fputcsv($f, $pay_info);
-        }
-        // ファイルを閉じる
-        fclose($f);
-        
-        // CSVデータを一時ファイルに保存してZIP化
-        $zip = new \ZipArchive();
-        $zipFileName = 'test.zip';
-        $zip->open($zipFileName,\ZipArchive::CREATE);    //同値演算子　値だけでなく、型も同じ場合にtrueを返
-        $file_info = pathinfo('test.csv');
-        $zip->addFile('test.csv');
-        $zip->close();
-
-        // ZIPファイルをダウンロードさせる
-        return response()->download($zipFileName);
+    //月別支払状況　条件指定画面に移行
+    public function expenseListSelect(){
+        return view('expense_list_select');
     }
-    */
+
+    //指定期間に基づきクエリ処理し、月別支払状況を表示
+    public function expenseListShow(Request $request){
+        
+        //day_fromがday_toよりも後日付の場合、画面移動せず、警告文を表示    
+        if(($request->dayFrom) > ($request->dayTo)){
+            return redirect()->route('expense_list.select')
+                ->withInput()
+                ->withErrors("FROMがTOの後日付になっています。");
+        }
+
+        //全支払明細から、最古の支払日と最新の支払日を取得し、各変数に保管
+        $oldestDate = DB::table('pay_infos')->where('user_id','=',Auth::user()->id)->min('pay_day');
+        $newestDate = DB::table('pay_infos')->where('user_id','=',Auth::user()->id)->max('pay_day');
+        //時期を指定した場合、それぞれの変数の値を変更
+        if(isset($request->dayFrom)){
+            $oldestDate = $request->dayFrom;
+        }
+        if(isset($request->dayTo)){
+            $newestDate = $request->dayTo;
+        }
+        
+        //支払時期の配列を作成。このデータは月別支払実績で表示する。
+        //年月データに変換する
+        $start = Carbon::parse($oldestDate)->startOfMonth();
+        $end = Carbon::parse($newestDate)->endOfMonth();
+        //配列に値を保管。最古月から最新月まで、1ヶ月毎の年月の文字列（yyyy-mm）を保存する。
+        $months = [];
+        while($start <= $end){
+            $months[] = $start->format('Y-m');
+            $start->addMonth();
+        }
+        
+        // クエリの複雑さを管理しやすくするため、当メソッドはクエリビルダを使用。
+        $results = DB::table('pay_infos')
+                    ->select(
+                        DB::raw('YEAR(pay_day)as year'),
+                        DB::raw('MONTH(pay_day)as month'),
+                        'account_items.id as id',
+                        DB::raw('account_items.accnt_class as accnt_class'),
+                        DB::raw('SUM(pay_infos.amount) as total'),            //月間の1科目の小計
+                    )
+                    ->join('account_items','pay_infos.accnt_class','=','account_items.accnt_class')
+                    ->where('user_id','=',Auth::user()->id)
+                    ->when($request->dayFrom, function($query,$start){
+                        return $query->where('pay_day','>=',$start);
+                    })
+                    ->when($request->dayTo, function($query,$end){
+                        return $query->where('pay_day','<=',$end);
+                    })
+                    ->groupBy('accnt_class','id','year','month')
+                    ->orderBy('year')
+                    ->orderBy('month')
+                    ->orderBy('id')
+                    ->get();
+                    
+        // 各科目の合計を保存するための配列
+        $totals = [];
+        //科目リスト
+        $accnt_classes = Account_item::whereNotNull('accnt_class')->pluck('accnt_class')->toArray();
+        // 集計データを格納するための配列
+        $data = [];
+        foreach ($months as $month){
+            foreach ($accnt_classes as $accnt_class){
+                $data[$month][$accnt_class] = 0;
+            }
+        }
+        //科目別合計額を格納する配列
+        $totals = [];
+        foreach($accnt_classes as $accnt_class){
+            $totals[$accnt_class] = 0;
+        }
+        
+        
+        foreach($results as $result){
+            $accnt_class = $result->accnt_class;
+            $yearMonth = $result->year . '-' . str_pad($result->month,2,'0',STR_PAD_LEFT);
+            
+            // $months 配列が既に初期化されていることを確認してデータをセット
+            if(!isset($data[$yearMonth])){
+                $data[$yearMonth] = array_fill_keys($accnt_classes, 0);     //二次元配列に小計額を保管
+            }
+            
+            // 該当月と科目に対して集計データを挿入
+            $data[$yearMonth][$accnt_class] = $result->total;
+            
+            // 各科目の合計を計算
+            $totals[$accnt_class] += $result->total;
+        }
+                    
+        return view('expense_list_show',compact('data','accnt_classes','totals','months','oldestDate','newestDate'));
+    }
+
 
 }

@@ -63,9 +63,8 @@ Route::post('/piainquiry_confirm', 'PayInfoController@inquiryCsv')->name('piainq
 照会ZIPデータ生成、ダウンロード（）
 Route::post('/piainquiry_confirm', 'PayInfoController@inquiryZIP')->name('piainquiry.zip');
 */
-//（機能）月別出費表
-//月別出費表　条件指定
-Route::get('/expense_list_select', 'PayInfoController@expenseListSelect')->name('expense_list.select
-');
-//月別出費表表示
+//（機能）月別支払実績
+//月別支払実績　条件指定
+Route::get('/expense_list_select', 'PayInfoController@expenseListSelect')->name('expense_list.select');
+//月別支払実績 表示
 Route::get('/expense_list_show', 'PayInfoController@expenseListShow')->name('expense_list.show');
