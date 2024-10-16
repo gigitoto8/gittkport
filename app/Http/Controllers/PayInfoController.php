@@ -249,24 +249,34 @@ class PayInfoController extends Controller
     //指定期間に基づきクエリ処理し、月別支払状況を表示
     public function expenseListShow(Request $request){
         
+
+        //全支払明細から、最古の支払日と最新の支払日を取得し、各変数に保管
+        $oldestDate = DB::table('pay_infos')->where('user_id','=',Auth::user()->id)->min('pay_day');
+        $newestDate = DB::table('pay_infos')->where('user_id','=',Auth::user()->id)->max('pay_day');
+        
+        //時期を指定した場合、それぞれの変数の値を変更
+        if(isset($request->dayFrom)){
+            $temp = $request->dayFrom;
+            $temp = Carbon::createFromFormat('Y-m',$temp)->startOfMonth()->toDateString(); //YYYY-MM-DD形式で月の初日を取得
+            if($temp > $oldestDate){
+                $oldestDate = $temp;        //dayFromが最古日付より後の場合、変数の値を上書きする
+            }
+        }
+        if(isset($request->dayTo)){
+            $temp = $request->dayTo;
+            $temp = Carbon::createFromFormat('Y-m',$temp)->endOfMonth()->toDateString();   //YYYY-MM-DD形式で月の末日を取得
+            if($temp < $newestDate){
+                $newestDate = $temp;        //dayToが最新日付より場合、変数の値を上書きする
+            }
+        }
+        
         //day_fromがday_toよりも後日付の場合、画面移動せず、警告文を表示    
-        if(($request->dayFrom) > ($request->dayTo)){
+        if($oldestDate > $newestDate){
             return redirect()->route('expense_list.select')
                 ->withInput()
                 ->withErrors("FROMがTOの後日付になっています。");
         }
 
-        //全支払明細から、最古の支払日と最新の支払日を取得し、各変数に保管
-        $oldestDate = DB::table('pay_infos')->where('user_id','=',Auth::user()->id)->min('pay_day');
-        $newestDate = DB::table('pay_infos')->where('user_id','=',Auth::user()->id)->max('pay_day');
-        //時期を指定した場合、それぞれの変数の値を変更
-        if(isset($request->dayFrom)){
-            $oldestDate = $request->dayFrom;
-        }
-        if(isset($request->dayTo)){
-            $newestDate = $request->dayTo;
-        }
-        
         //支払時期の配列を作成。このデータは月別支払実績で表示する。
         //年月データに変換する
         $start = Carbon::parse($oldestDate)->startOfMonth();
@@ -289,12 +299,8 @@ class PayInfoController extends Controller
                     )
                     ->join('account_items','pay_infos.accnt_class','=','account_items.accnt_class')
                     ->where('user_id','=',Auth::user()->id)
-                    ->when($request->dayFrom, function($query,$start){
-                        return $query->where('pay_day','>=',$start);
-                    })
-                    ->when($request->dayTo, function($query,$end){
-                        return $query->where('pay_day','<=',$end);
-                    })
+                    ->where('pay_day' , '>=' , $oldestDate)
+                    ->where('pay_day' , '<=' , $newestDate)
                     ->groupBy('accnt_class','id','year','month')
                     ->orderBy('year')
                     ->orderBy('month')
