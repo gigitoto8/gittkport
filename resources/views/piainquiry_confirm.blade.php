@@ -2,7 +2,7 @@
 
 @section('content')
 
-    <h1>明細照会</h1>
+    <h1>支払明細照会</h1>
 
     <h2>{{Auth::user()->name}} さんの明細</h2>
     
@@ -46,7 +46,7 @@
     <form action={{ route('piainquiry.csv') }} method="post">
     @csrf                  
         <div style="border-width:thin; border-style:dashed;padding:20px 20px 20px;border-color:#777777;">
-            <a>照会結果のCSVデータをダウンロードする場合、"ダウンロード"ボタンをクリックしてください。</a>
+            <a>照会のCSVデータをダウンロードする場合、"ダウンロード"ボタンをクリックしてください。</a>
             <br>
             <a>※データ名を指定する場合、テキストボックスに入力してください。</a>
             <br>

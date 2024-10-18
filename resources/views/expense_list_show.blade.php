@@ -62,9 +62,9 @@
     {{print_r($oldestDate)}}
     {{print_r($newestDate)}}
     
-    <h1>月別支払実績</h1>
+    <h1>月別支払状況</h1>
 
-    <h2>{{Auth::user()->name}} さんの支払実績</h2>
+    <h2>{{Auth::user()->name}} さんの支払</h2>
     
     <div class='listShow'>
         <table class='table table-striped table-hover'>

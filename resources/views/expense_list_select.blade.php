@@ -13,7 +13,7 @@
     </div>
     @endif
 
-    <h2>月別出費表　条件指定</h2>
+    <h2>月別出費状況　条件指定</h2>
     <p>年・月基準で期間を指定してください。</p>
     
     <form action={{ route('expense_list.show') }} method="get">
