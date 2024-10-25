@@ -40,4 +40,5 @@
 5. アプリ掲載先  
 　URL：https://take5.paiza-user-basic.cloud:8000/  
 　アカウント情報（機能使用のため、ログインが必要です。）  
-　ユーザー名：trial0605　email：mail_0605@mail.com	Password：trial_0605  
+　ユーザー名：trial0605　email：mail_0605@mail.com	Password：trial_0605
+
